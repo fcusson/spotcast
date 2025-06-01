@@ -2,7 +2,7 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 [![spotcast](https://img.shields.io/github/release/fondberg/spotcast.svg?1)](https://github.com/fondberg/spotcast)
-![Maintenance](https://img.shields.io/maintenance/yes/2022.svg)
+![Maintenance](https://img.shields.io/maintenance/yes/2025.svg)
 
 Home Assistant custom component to start Spotify playback on an idle chromecast device or a Spotify Connect device (thanks to @kleinc80) which means that you can target your automation for chromecast as well as connect devices.
 
@@ -11,7 +11,10 @@ Spotcast implements a cast platform (requires Home Assistant Core 2022.2.0 or la
 This component is not meant to be a full Spotify chromecast media_player but only serves to start the playback. Controlling the chromecast device and the Spotify playback after the initial start is done in their respective components.
 Because starting playback using the API requires more powerful token the username and password used for browser login is used.
 
-Used by [Spotify-Card](https://github.com/custom-cards/spotify-card).
+> [!WARNING]
+> A breaking change in Home Assitant `2024.11` is causing [Spotify-Card](https://github.com/custom-cards/spotify-card) to break. As the project has no active maintainer, this break cannot be fixed, but a fork of the project can be found [here](https://github.com/mikevanes/spotify-card-v2). If you are having issue with [Spotify-Card-V2](https://github.com/mikevanes/spotify-card-v2) make sure bto open a ticket in that repository. This projects and its maintainers do not manage the other project and cannot help you directly.
+
+Used by [Spotify-Card-V2](https://github.com/mikevanes/spotify-card-v2)
 
 __[Community post](https://community.home-assistant.io/t/spotcast-custom-component-to-start-playback-on-an-idle-chromecast-device/114232)__
 
@@ -29,7 +32,7 @@ Copy all files from custom_components/spotcast/ to custom_components/spotcast/ i
 
 ### Minimum Home Assistant version
 
-Spotcast is compatible with any version since 2021.12.0.
+Spotcast is compatible with any version since 2024.11.0.
 
 ### Official Spotify Integration
 
@@ -177,15 +180,8 @@ To use the Spotcast service with a Spotify Connect device, you need the `spotify
 #### With Spotify developer portal
 
 1. Go to [Spotify developer console](https://developer.spotify.com/console/get-users-available-devices/)
-2. Click `GET TOKEN` <br/>
-![get_token](./images/get_token.png)
-3. Select `user-read-playback-state` as a scope<br/>
-![select_scope](./images/select_scope.png)
-4. If prompt give permission to your Spotify profile
-5. For chromecast devices, make sure to play media on the device prior to checking the logs as they will not show unless active
-6. Press the option `Try it`
-7. Read the result in the console in the right.<br/>
-![device_id](./images/device_id.png)
+2. Click `TRY IT` <br/>
+3. Extract the ID (there could be more than one if you have more than one speaker) from the 'RESPONSE SAMPLE' on the right
 
 #### Through Spotcast log
 
@@ -331,7 +327,7 @@ sensor.chromecast_devices
 
 Attributes
 
-```json
+```yaml
 devices_json: [
   {
     "name": "Speaker kitchen",
